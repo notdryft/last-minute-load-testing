@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.dryft.gatling</groupId>
+  <artifactId>untitled</artifactId>
+  <version>1.0</version>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <scala.version>2.12.12</scala.version>
+    <encoding>UTF-8</encoding>
+
+    <!-- Main dependency -->
+    <gatling.version>3.3.1</gatling.version>
+
+    <!-- Third party dependencies -->
+    <ficus.version>1.5.0</ficus.version>
+
+    <!-- Plugins -->
+    <scala-maven-plugin.version>4.3.1</scala-maven-plugin.version>
+    <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+    <gatling-maven-plugin.version>3.0.4</gatling-maven-plugin.version>
+    <frontline-maven-plugin.version>1.0.3</frontline-maven-plugin.version>
+  </properties>
+
+  <dependencies>
+    <!-- Main dependency -->
+    <dependency>
+      <groupId>io.gatling.highcharts</groupId>
+      <artifactId>gatling-charts-highcharts</artifactId>
+      <version>${gatling.version}</version>
+    </dependency>
+    <!-- Third party dependencies -->
+    <dependency>
+      <groupId>com.iheart</groupId>
+      <artifactId>ficus_2.12</artifactId>
+      <version>${ficus.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven-jar-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>${scala-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+            <configuration>
+              <recompileMode>all</recompileMode>
+              <jvmArgs>
+                <jvmArg>-Xss100M</jvmArg>
+              </jvmArgs>
+              <args>
+                <arg>-target:jvm-1.8</arg>
+                <arg>-deprecation</arg>
+                <arg>-feature</arg>
+                <arg>-unchecked</arg>
+                <arg>-language:implicitConversions</arg>
+                <arg>-language:postfixOps</arg>
+              </args>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>io.gatling.frontline</groupId>
+        <artifactId>frontline-maven-plugin</artifactId>
+        <version>${frontline-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>package</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>io.gatling</groupId>
+        <artifactId>gatling-maven-plugin</artifactId>
+        <version>${gatling-maven-plugin.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>
